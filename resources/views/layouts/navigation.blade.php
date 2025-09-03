@@ -15,6 +15,9 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('booking.index')" :active="request()->routeIs('booking.*')">
+                        {{ __('Booking') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -96,14 +99,5 @@
                 </form>
             </div>
         </div>
-    </div>
-    <!-- Add to the navigation menu -->
-    <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-            {{ __('Dashboard') }}
-        </x-nav-link>
-        <x-nav-link :href="route('booking.index')" :active="request()->routeIs('booking.*')">
-            {{ __('Booking') }}
-        </x-nav-link>
     </div>
 </nav>

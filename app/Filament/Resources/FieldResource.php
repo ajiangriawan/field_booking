@@ -14,25 +14,25 @@ class FieldResource extends Resource
 {
     protected static ?string $model = Field::class;
     protected static ?string $navigationIcon = 'heroicon-o-building-office';
-    protected static ?string $navigationLabel = 'Lapangan';
-    protected static ?string $pluralLabel = 'Lapangan';
+    protected static ?string $navigationLabel = 'Fields';
+    protected static ?string $pluralLabel = 'Fields';
 
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label('Nama Lapangan')
+                    ->label('Field Name')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Textarea::make('description')
-                    ->label('Deskripsi')
+                    ->label('Description')
                     ->columnSpanFull(),
                 Forms\Components\FileUpload::make('image')
-                    ->label('Gambar')
+                    ->label('Image')
                     ->image(),
                 Forms\Components\Toggle::make('is_active')
-                    ->label('Status Aktif')
+                    ->label('Active Status')
                     ->default(true),
             ]);
     }
@@ -42,15 +42,15 @@ class FieldResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama Lapangan')
+                    ->label('Field Name')
                     ->searchable(),
                 Tables\Columns\ImageColumn::make('image')
-                    ->label('Gambar'),
+                    ->label('Image'),
                 Tables\Columns\IconColumn::make('is_active')
-                    ->label('Status')
+                    ->label('Active Status')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('Dibuat')
+                    ->label('Created At')
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

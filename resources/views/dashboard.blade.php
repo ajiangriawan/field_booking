@@ -86,7 +86,7 @@
                                         @if($booking->status === 'dp_paid')
                                         <form action="{{ route('booking.pay-remaining', $booking) }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="text-green-600 hover:text-green-900">
+                                            <button type="submit" class="rounded-md bg-green-500 px-3.5 py-2.5 text-sm font-semibold text-white hover:bg-green-600">
                                                 Bayar Pelunasan
                                             </button>
                                         </form>

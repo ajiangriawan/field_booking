@@ -10,7 +10,7 @@ class AdminMiddleware
 {
     public function handle(Request $request, Closure $next): Response
     {
-        if (auth()->user() && auth()->user()->email === 'admin@admin.com') {
+        if (auth()->user() && auth()->user()->role === 'admin') {
             return $next($request);
         }
 
