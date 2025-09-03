@@ -15,7 +15,6 @@ class Booking extends Model
         'booking_code',
         'user_id',
         'field_id',
-        'field_schedule_id',
         'booking_date',
         'total_price',
         'dp_amount',
@@ -53,9 +52,10 @@ class Booking extends Model
         return $this->belongsTo(Field::class);
     }
 
-    public function fieldSchedule(): BelongsTo
+    // Relasi many-to-many ke FieldSchedule
+    public function fieldSchedules()
     {
-        return $this->belongsTo(FieldSchedule::class);
+        return $this->belongsToMany(FieldSchedule::class, 'booking_field_schedule');
     }
 
     public function payments(): HasMany

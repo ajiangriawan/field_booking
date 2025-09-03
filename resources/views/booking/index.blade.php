@@ -1,36 +1,28 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Pilih Lapangan') }}
+            Pilih Lapangan
         </h2>
     </x-slot>
 
     <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                @foreach($fields as $field)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        @if($field->image)
-                            <img src="{{ Storage::url($field->image) }}" alt="{{ $field->name }}" class="w-full h-48 object-cover">
-                        @else
-                            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                                <span class="text-gray-400">No Image</span>
+        <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6">
+                    <h3 class="text-lg font-bold mb-4">Silakan pilih lapangan untuk booking:</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        @foreach($fields as $field)
+                            <div class="border rounded-lg p-4 flex flex-col items-start">
+                                <div class="font-semibold text-xl mb-2">{{ $field->name }}</div>
+                                <div class="mb-4 text-gray-600">Status: {{ $field->is_active ? 'Aktif' : 'Tidak Aktif' }}</div>
+                                <a href="{{ route('booking.show', $field->id) }}"
+                                   class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                                    Pilih Lapangan
+                                </a>
                             </div>
-                        @endif
-                        
-                        <div class="p-6">
-                            <h3 class="text-lg font-semibold mb-2">{{ $field->name }}</h3>
-                            @if($field->description)
-                                <p class="text-gray-600 mb-4">{{ $field->description }}</p>
-                            @endif
-                            
-                            <a href="{{ route('booking.show', $field) }}" 
-                               class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded inline-block text-center">
-                                Pilih Lapangan
-                            </a>
-                        </div>
+                        @endforeach
                     </div>
-                @endforeach
+                </div>
             </div>
         </div>
     </div>

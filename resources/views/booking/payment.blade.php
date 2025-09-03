@@ -26,8 +26,13 @@
                                 {{ $booking->booking_date->format('d/m/Y') }}
                             </div>
                             <div>
-                                <strong>Waktu:</strong><br>
-                                {{ $booking->fieldSchedule->start_time }} - {{ $booking->fieldSchedule->end_time }}
+                                <strong>Jadwal:</strong><br>
+                                @foreach($booking->fieldSchedules as $schedule)
+                                <div>
+                                    {{ ucfirst($schedule->day_of_week) }},
+                                    {{ $schedule->start_time }} - {{ $schedule->end_time }}
+                                </div>
+                                @endforeach
                             </div>
                             <div>
                                 <strong>Total Harga:</strong><br>

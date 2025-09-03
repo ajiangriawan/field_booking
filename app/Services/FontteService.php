@@ -42,7 +42,13 @@ class FontteService
 
     private function formatBookingMessage(Booking $booking)
     {
-        $schedule = $booking->fieldSchedule;
+        $jadwalInfo = [];
+        foreach ($booking->fieldSchedules as $schedule) {
+            // Pastikan $schedule tidak null
+            if ($schedule) {
+                $jadwalInfo[] = $schedule->start_time . ' - ' . $schedule->end_time;
+            }
+        }
         
         return "🏟️ *BOOKING BARU* 🏟️\n\n" .
                "📋 Kode Booking: {$booking->booking_code}\n" .
@@ -50,7 +56,7 @@ class FontteService
                "📧 Email: {$booking->user->email}\n" .
                "🏟️ Lapangan: {$booking->field->name}\n" .
                "📅 Tanggal: {$booking->booking_date->format('d/m/Y')}\n" .
-               "⏰ Waktu: {$schedule->start_time} - {$schedule->end_time}\n" .
+               "⏰ Waktu: " . implode(', ', $jadwalInfo) . "\n" .
                "💰 Total Harga: Rp " . number_format($booking->total_price, 0, ',', '.') . "\n" .
                "💳 DP (20%): Rp " . number_format($booking->dp_amount, 0, ',', '.') . "\n" .
                "💵 Sisa: Rp " . number_format($booking->remaining_amount, 0, ',', '.') . "\n" .

@@ -2,18 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Booking;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Models\Booking;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        $bookings = Booking::where('user_id', Auth::id())
-            ->with(['field', 'fieldSchedule', 'payments'])
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // Ambil semua booking milik user yang sedang login
+        $bookings = Booking::with(['field', 'fieldSchedules'])->where('user_id', auth()->id())->get();
 
         return view('dashboard', compact('bookings'));
     }

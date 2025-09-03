@@ -9,7 +9,7 @@
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6">
-                    <form action="{{ route('booking.store') }}" method="POST">
+                    <form method="POST" action="{{ route('booking.store') }}">
                         @csrf
                         <input type="hidden" name="field_id" value="{{ $field->id }}">
                         
@@ -90,10 +90,10 @@
                                 
                                 scheduleDiv.innerHTML = `
                                     <label class="flex items-center ${schedule.is_booked ? 'cursor-not-allowed' : 'cursor-pointer'}">
-                                        <input type="radio" 
-                                               name="field_schedule_id" 
+                                        <input type="checkbox" 
+                                               name="field_schedule_ids[]" 
                                                value="${schedule.id}" 
-                                               ${schedule.is_booked ? 'disabled' : 'required'}
+                                               ${schedule.is_booked ? 'disabled' : ''}
                                                class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300">
                                         <div class="ml-3 flex-1">
                                             <div class="flex justify-between items-center">

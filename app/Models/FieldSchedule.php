@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class FieldSchedule extends Model
 {
@@ -30,16 +30,13 @@ class FieldSchedule extends Model
         return $this->belongsTo(Field::class);
     }
 
-    public function bookings(): HasMany
+    public function bookings()
     {
-        return $this->hasMany(Booking::class);
+        return $this->belongsToMany(Booking::class, 'booking_field_schedule');
     }
 
-    public function isBooked($date): bool
+    public function isBooked($date)
     {
-        return $this->bookings()
-            ->where('booking_date', $date)
-            ->whereIn('status', ['dp_paid', 'fully_paid'])
-            ->exists();
+        return $this->bookings()->where('booking_date', $date)->exists();
     }
 }
