@@ -1,0 +1,270 @@
+/* AsitCom Sport - Modern Sporty Design */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
+:root {
+  --sport-primary: #8AA624;
+  --sport-primary-dark: #DBE4C9;
+  --sport-secondary: #FFFFF0;
+  --sport-accent: #22C55E ;
+  --sport-dark: #0A0E27;
+  --sport-gray: #1A1D29;
+  --sport-light-gray: #2D3748;
+  --sport-text: #E2E8F0;
+  --sport-text-muted: #A0AEC0;
+  --gradient-sport: linear-gradient(135deg, var(--sport-primary) 0%, var(--sport-secondary) 100%);
+  --gradient-dark: linear-gradient(135deg, var(--sport-dark) 0%, var(--sport-gray) 100%);
+  --shadow-sport: 0 10px 40px rgba(0, 212, 255, 0.3);
+  --shadow-dark: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+.sport-font {
+  font-family: 'Orbitron', monospace;
+}
+
+/* Gradient Backgrounds */
+.bg-sport-gradient {
+  background: var(--gradient-sport);
+}
+
+.bg-dark-gradient {
+  background: var(--gradient-dark);
+}
+
+/* Sport-themed animations */
+@keyframes pulse-sport {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(0, 212, 255, 0.7);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(0, 212, 255, 0);
+  }
+}
+
+@keyframes glow-sport {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.8);
+  }
+}
+
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    transform: translateX(-100px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fade-in-up {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pulse-sport {
+  animation: pulse-sport 2s infinite;
+}
+
+.animate-glow-sport {
+  animation: glow-sport 2s infinite alternate;
+}
+
+.animate-slide-in-right {
+  animation: slide-in-right 0.8s ease-out;
+}
+
+.animate-slide-in-left {
+  animation: slide-in-left 0.8s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.animate-bounce-in {
+  animation: bounce-in 0.6s ease-out;
+}
+
+/* Glass morphism effect */
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Custom buttons */
+.btn-sport {
+  @apply relative overflow-hidden font-semibold py-3 px-6 rounded-xl transition-all duration-300 transform;
+  background: var(--gradient-sport);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-sport:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-sport);
+}
+
+.btn-sport:active {
+  transform: translateY(0);
+}
+
+.btn-sport::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s;
+}
+
+.btn-sport:hover::before {
+  left: 100%;
+}
+
+/* Sport card effects */
+.sport-card {
+  @apply bg-white rounded-2xl shadow-lg overflow-hidden transition-all duration-300 transform;
+  border: 2px solid transparent;
+}
+
+.sport-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-sport);
+  border-color: var(--sport-primary);
+}
+
+/* Custom inputs */
+.sport-input {
+  @apply w-full px-4 py-3 rounded-xl border-2 border-gray-300 focus:border-blue-500 focus:outline-none transition-all duration-300;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.sport-input:focus {
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+}
+
+/* Loading spinner */
+.sport-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 212, 255, 0.3);
+  border-top: 4px solid var(--sport-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive utilities */
+@media (max-width: 768px) {
+  .sport-card {
+    margin: 0 1rem;
+  }
+  
+  .btn-sport {
+    @apply w-full;
+  }
+  
+  .sport-input {
+    @apply text-sm;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .auto-dark {
+    background: var(--sport-dark);
+    color: var(--sport-text);
+  }
+}
+
+/* Utility classes */
+.text-sport-primary { color: var(--sport-primary); }
+.text-sport-secondary { color: var(--sport-secondary); }
+.text-sport-accent { color: var(--sport-accent); }
+.bg-sport-primary { background-color: var(--sport-primary); }
+.bg-sport-secondary { background-color: var(--sport-secondary); }
+.bg-sport-accent { background-color: var(--sport-accent); }
+.bg-sport-dark { background-color: var(--sport-dark); }
+.bg-sport-gray { background-color: var(--sport-gray); }
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sport-gray);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sport-primary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sport-primary-dark);
+}
