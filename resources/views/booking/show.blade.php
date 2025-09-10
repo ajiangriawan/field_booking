@@ -1,8 +1,22 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Booking {{ $field->name }}
-        </h2>
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="sport-font text-3xl font-bold bg-gradient-to-r from-sport-primary via-sport-accent to-sport-secondary bg-clip-text text-transparent">
+                    Booking {{ $field->name }}
+                </h2>
+                <p class="text-sport-text-muted text-sm mt-1">Complete your reservation in a few simple steps</p>
+            </div>
+            <div class="hidden md:flex items-center space-x-4">
+                <div class="glass-dark border border-sport-primary/20 px-4 py-2 rounded-lg">
+                    <div class="flex items-center space-x-2 text-sm">
+                        <i class="fas fa-shield-alt text-sport-accent"></i>
+                        <span class="text-sport-text">Secure Booking</span>
+                    </div>
+                </div>
+                <div class="w-2 h-2 bg-sport-accent rounded-full animate-pulse"></div>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">

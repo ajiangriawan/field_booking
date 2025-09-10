@@ -179,7 +179,7 @@
                             <!-- Payment Button -->
                             <div class="text-center mt-8">
                                 <button id="pay-button" 
-                                        class="btn-sport text-xl px-12 py-4 font-bold group relative overflow-hidden">
+                                        class="btn-sport rounded-2xl bg-gradient-to-r from-sport-accent to-sport-primary hover:from-sport-accent hover:to-sport-primary-dark group text-xl px-12 py-4 font-bold group relative overflow-hidden">
                                     <div class="flex items-center justify-center space-x-3">
                                         <i class="fas fa-credit-card group-hover:scale-110 transition-transform duration-300"></i>
                                         <span>Bayar Sekarang</span>

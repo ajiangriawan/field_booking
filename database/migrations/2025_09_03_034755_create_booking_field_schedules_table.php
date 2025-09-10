@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('booking_field_schedules');
+        Schema::dropIfExists('booking_field_schedule');
     }
 };

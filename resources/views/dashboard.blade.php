@@ -1,19 +1,21 @@
 <x-app-layout>
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="sport-font text-3xl font-bold bg-gradient-to-r from-sport-primary via-sport-accent to-sport-secondary bg-clip-text text-transparent">
-                {{ __('Dashboard') }}
-            </h2>
-            <p class="text-sport-text-muted text-sm mt-1">Welcome back to your sports command center</p>
-        </div>
-        <div class="flex items-center space-x-3">
-            <div class="hidden sm:flex items-center space-x-2 text-sm text-sport-text-muted">
-                <i class="fas fa-calendar-day text-sport-primary"></i>
-                <span>{{ now()->format('l, F j, Y') }}</span>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="sport-font text-3xl font-bold bg-gradient-to-r from-sport-primary via-sport-accent to-sport-secondary bg-clip-text text-transparent">
+                    {{ __('Dashboard') }}
+                </h2>
+                <p class="text-sport-text-muted text-sm mt-1">Welcome back to your sports command center</p>
             </div>
-            <div class="w-2 h-2 bg-sport-accent rounded-full animate-pulse"></div>
+            <div class="flex items-center space-x-3">
+                <div class="hidden sm:flex items-center space-x-2 text-sm text-sport-text-muted">
+                    <i class="fas fa-calendar-day text-sport-primary"></i>
+                    <span>{{ now()->format('l, F j, Y') }}</span>
+                </div>
+                <div class="w-2 h-2 bg-sport-accent rounded-full animate-pulse"></div>
+            </div>
         </div>
-    </div>
+    </x-slot>
 
     <div class="py-6 lg:py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -43,7 +45,7 @@
                             </div>
                         </div>
                         <a href="{{ route('booking.index') }}"
-                            class="btn-sport flex items-center bg-gradient-to-br from-sport-primary to-sport-accent rounded-2xl space-x-2 px-6 py-3 font-semibold text-lg group animate-glow text-sport-text">
+                            class="btn-sport rounded-2xl bg-gradient-to-r from-sport-accent to-sport-primary hover:from-sport-accent hover:to-sport-primary-dark group flex items-center space-x-2 px-6 py-3 font-semibold text-lg group animate-glow">
                             <i class="fas fa-plus-circle group-hover:rotate-90 transition-transform duration-300"></i>
                             <span>Booking Lapangan</span>
                         </a>
@@ -320,9 +322,17 @@
                                         @if($booking->status === 'dp_paid')
                                         <form action="{{ route('booking.pay-remaining', $booking) }}" method="POST" class="inline">
                                             @csrf
-                                            <button type="submit" class="btn-sport text-sm px-4 py-2 bg-gradient-to-r from-sport-accent to-sport-primary hover:from-sport-accent hover:to-sport-primary-dark group rounded-2xl">
+                                            <button type="submit" class="btn-sport text-sm px-4 py-2 rounded-2xl bg-gradient-to-r from-sport-accent to-sport-primary hover:from-sport-accent hover:to-sport-primary-dark group">
                                                 <i class="fas fa-credit-card mr-2 group-hover:scale-110 transition-transform duration-300"></i>
                                                 Bayar Pelunasan
+                                            </button>
+                                        </form>
+                                        @elseif($booking->status === 'pending')
+                                        <form action="{{ route('booking.payDp', $booking) }}" method="POST" class="inline">
+                                            @csrf
+                                            <button type="submit" class="btn-sport text-sm px-4 py-2 rounded-2xl bg-gradient-to-r from-sport-primary to-sport-accent hover:from-sport-primary hover:to-sport-primary-dark group">
+                                                <i class="fas fa-money-bill-wave mr-2 group-hover:scale-110 transition-transform duration-300"></i>
+                                                Bayar DP
                                             </button>
                                         </form>
                                         @else
@@ -343,7 +353,7 @@
                         </div>
                         <h3 class="text-xl font-semibold text-sport-text mb-2">No Booking History</h3>
                         <p class="text-sport-text-muted mb-6">You haven't made any bookings yet. Start by booking your first session!</p>
-                        <a href="{{ route('booking.index') }}" class="btn-sport inline-flex items-center space-x-2">
+                        <a href="{{ route('booking.index') }}" class="btn-sport rounded-2xl px-6 py-3 bg-gradient-to-r from-sport-accent to-sport-primary hover:from-sport-accent hover:to-sport-primary-dark inline-flex items-center space-x-2">
                             <i class="fas fa-plus-circle"></i>
                             <span>Make Your First Booking</span>
                         </a>

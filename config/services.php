@@ -41,9 +41,9 @@ return [
         'is_production' => env('MIDTRANS_IS_PRODUCTION', false),
     ],
 
-    'fontte' => [
-        'api_key' => env('FONTTE_API_KEY'),
-        'admin_phone' => env('ADMIN_PHONE_NUMBER'),
+    'fonnte' => [
+        'api_key' => env('FONNTE_API_KEY'),
+        'admin_phone' => env('ADMIN_PHONE'),
     ],
 
 ];

@@ -1,26 +1,28 @@
 <x-app-layout>
-    <div class="flex items-center justify-between">
-        <div>
-            <h2 class="sport-font text-3xl font-bold bg-gradient-to-r from-sport-primary via-sport-accent to-sport-secondary bg-clip-text text-transparent">
-                {{ __('Pilih Lapangan') }}
-            </h2>
-            <p class="text-sport-text-muted text-sm mt-1">Discover premium sports facilities tailored for your needs</p>
-        </div>
-        <div class="flex items-center space-x-4">
-            <div class="hidden md:flex items-center space-x-2 text-sm text-sport-text">
-                <i class="fas fa-map-marker-alt text-sport-primary"></i>
-                <span>{{ $fields->count() }} facilities available</span>
+    <x-slot name="header">
+        <div class="flex items-center justify-between">
+            <div>
+                <h2 class="sport-font text-3xl font-bold bg-gradient-to-r from-sport-primary via-sport-accent to-sport-secondary bg-clip-text text-transparent">
+                    {{ __('Pilih Lapangan') }}
+                </h2>
+                <p class="text-sport-text-muted text-sm mt-1">Discover premium sports facilities tailored for your needs</p>
             </div>
-            <div class="flex items-center space-x-2">
-                <button class="p-2 bg-sport-primary/10 hover:bg-sport-primary/20 rounded-lg text-sport-primary transition-colors duration-300" title="Filter">
-                    <i class="fas fa-filter"></i>
-                </button>
-                <button class="p-2 bg-sport-primary/10 hover:bg-sport-primary/20 rounded-lg text-sport-primary transition-colors duration-300" title="Map View">
-                    <i class="fas fa-map"></i>
-                </button>
+            <div class="flex items-center space-x-4">
+                <div class="hidden md:flex items-center space-x-2 text-sm text-sport-text">
+                    <i class="fas fa-map-marker-alt text-sport-primary"></i>
+                    <span>{{ $fields->count() }} facilities available</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <button class="p-2 bg-sport-primary/10 hover:bg-sport-primary/20 rounded-lg text-sport-primary transition-colors duration-300" title="Filter">
+                        <i class="fas fa-filter"></i>
+                    </button>
+                    <button class="p-2 bg-sport-primary/10 hover:bg-sport-primary/20 rounded-lg text-sport-primary transition-colors duration-300" title="Map View">
+                        <i class="fas fa-map"></i>
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
+    </x-slot>
 
     <div class="py-6 lg:py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

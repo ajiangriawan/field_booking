@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 class FieldResource extends Resource
 {
     protected static ?string $model = Field::class;
-    protected static ?string $navigationIcon = 'heroicon-o-building-office';
+    protected static ?string $navigationIcon = 'tabler-soccer-field';
     protected static ?string $navigationLabel = 'Fields';
     protected static ?string $pluralLabel = 'Fields';
 

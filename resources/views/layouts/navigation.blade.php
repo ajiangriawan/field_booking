@@ -58,18 +58,18 @@
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:space-x-4">
                 <!-- User Stats Mini Card -->
-                <div class="hidden lg:flex items-center space-x-3 bg-sport-gray/50 rounded-lg px-3 py-2 border border-sport-primary/10">
-                    <!-- <div class="text-center">
+                <!-- <div class="hidden lg:flex items-center space-x-3 bg-sport-gray/50 rounded-lg px-3 py-2 border border-sport-primary/10">
+                    <div class="text-center">
                         <div class="text-xs text-sport-text-muted">Active Bookings</div>
                         <div class="text-sm font-bold text-sport-primary">3</div>
-                    </div> -->
+                    </div>
                     <div class="w-px h-6 bg-sport-primary/20"></div>
-                    <!-- Credit -->
-                    <!-- <div class="text-center">
+                    
+                     <div class="text-center">
                         <div class="text-xs text-sport-text-muted">Credits</div>
                         <div class="text-sm font-bold text-sport-accent">250</div>
-                    </div> -->
-                </div>
+                    </div>
+                </div> -->
 
                 <x-dropdown align="right" width="64">
                     <x-slot name="trigger">

@@ -30,13 +30,19 @@ class FieldSchedule extends Model
         return $this->belongsTo(Field::class);
     }
 
-    public function bookings()
-    {
-        return $this->belongsToMany(Booking::class, 'booking_field_schedule');
-    }
 
     public function isBooked($date)
     {
         return $this->bookings()->where('booking_date', $date)->exists();
+    }
+
+    public function bookings(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Booking::class,
+            'booking_field_schedule',
+            'field_schedule_id',
+            'booking_id'
+        )->withTimestamps();
     }
 }

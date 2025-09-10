@@ -21,10 +21,10 @@ class PaymentController extends Controller
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent()
             ]);
-            
+
             $midtransService = new MidtransService();
             $notification = $request->all();
-            
+
             // Skip signature validation untuk development/testing
             if (app()->environment('local')) {
                 Log::info('Skipping signature validation in local environment');
@@ -35,9 +35,9 @@ class PaymentController extends Controller
                     return response('Invalid signature', 403);
                 }
             }
-            
+
             $result = $midtransService->handleCallback($notification);
-            
+
             if ($result) {
                 Log::info('Callback processed successfully');
                 return response('OK', 200);
@@ -45,7 +45,6 @@ class PaymentController extends Controller
                 Log::error('Failed to process callback');
                 return response('Failed', 400);
             }
-            
         } catch (\Exception $e) {
             Log::error('Callback Error: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
@@ -62,18 +61,18 @@ class PaymentController extends Controller
         $status_code = $notification['status_code'] ?? '';
         $gross_amount = $notification['gross_amount'] ?? '';
         $server_key = config('midtrans.server_key');
-        
+
         $signature = hash('sha512', $order_id . $status_code . $gross_amount . $server_key);
-        
-        return isset($notification['signature_key']) && 
-               hash_equals($signature, $notification['signature_key']);
+
+        return isset($notification['signature_key']) &&
+            hash_equals($signature, $notification['signature_key']);
     }
 
     public function success(Request $request)
     {
         $order_id = $request->get('order_id');
         $booking = null;
-        
+
         if ($order_id) {
             // Extract booking ID from order_id format
             $parts = explode('-', $order_id);
@@ -82,7 +81,13 @@ class PaymentController extends Controller
                 $booking = Booking::find($booking_id);
             }
         }
-        
+
+        if ($booking) {
+            // Panggil WA Service
+            $fonnte = new \App\Services\FonnteService();
+            $fonnte->sendBookingNotification($booking);
+        }
+
         return view('payment.success', compact('booking'));
     }
 
@@ -90,7 +95,7 @@ class PaymentController extends Controller
     {
         $order_id = $request->get('order_id');
         $booking = null;
-        
+
         if ($order_id) {
             $parts = explode('-', $order_id);
             if (count($parts) >= 2) {
@@ -98,7 +103,7 @@ class PaymentController extends Controller
                 $booking = Booking::find($booking_id);
             }
         }
-        
+
         return view('payment.pending', compact('booking'));
     }
 
@@ -106,7 +111,7 @@ class PaymentController extends Controller
     {
         $order_id = $request->get('order_id');
         $booking = null;
-        
+
         if ($order_id) {
             $parts = explode('-', $order_id);
             if (count($parts) >= 2) {
@@ -114,7 +119,7 @@ class PaymentController extends Controller
                 $booking = Booking::find($booking_id);
             }
         }
-        
+
         return view('payment.error', compact('booking'));
     }
 
@@ -124,7 +129,7 @@ class PaymentController extends Controller
         if ($booking->user_id !== Auth::id()) {
             abort(403, 'Unauthorized');
         }
-        
+
         if ($booking->status !== 'dp_paid') {
             return back()->with('error', 'Status booking tidak valid untuk pembayaran sisa.');
         }

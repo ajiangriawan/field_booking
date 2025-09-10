@@ -6,10 +6,11 @@ use App\Models\Field;
 use App\Models\FieldSchedule;
 use App\Models\Booking;
 use App\Services\MidtransService;
-use App\Services\FontteService;
+use App\Services\FonnteService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class BookingController extends Controller
 {
@@ -88,8 +89,8 @@ class BookingController extends Controller
         $booking->fieldSchedules()->attach($request->field_schedule_ids);
 
         // Send WhatsApp notification to admin
-        $fontteService = new FontteService();
-        $fontteService->sendBookingNotification($booking);
+        // $fonnteService = new FonnteService();
+        // $fonnteService->sendBookingNotification($booking);
 
         if ($request->payment_method === 'transfer') {
             $midtransService = new MidtransService();
@@ -107,5 +108,59 @@ class BookingController extends Controller
         }
 
         return redirect()->route('dashboard')->with('success', 'Booking berhasil dibuat. Menunggu konfirmasi admin untuk pembayaran cash.');
+    }
+    public function payDp(Booking $booking)
+    {
+        // Debug logging
+        Log::info('PayDP Debug', [
+            'booking_id' => $booking->id,
+            'booking_user_id' => $booking->user_id,
+            'current_user_id' => Auth::id(),
+            'booking_status' => $booking->status,
+            'payment_method' => $booking->payment_method
+        ]);
+
+        // Validasi user dan status booking
+        if ($booking->user_id != Auth::id()) {
+            Log::warning('PayDP Access Denied', [
+                'booking_user_id' => $booking->user_id,
+                'current_user_id' => Auth::id(),
+                'booking_id' => $booking->id
+            ]);
+            return redirect()->route('dashboard')->with('error', 'Tidak dapat mengakses booking ini.');
+        }
+
+        if ($booking->status !== 'pending') {
+            return redirect()->route('dashboard')->with('error', 'Status booking tidak valid untuk pembayaran DP. Status saat ini: ' . $booking->status);
+        }
+
+        // Pastikan payment method adalah transfer
+        if ($booking->payment_method !== 'transfer') {
+            return redirect()->route('dashboard')->with('info', 'Untuk pembayaran cash, silakan hubungi admin untuk konfirmasi.');
+        }
+
+        try {
+            $midtransService = new MidtransService();
+            $result = $midtransService->createTransaction($booking, 'dp');
+
+            if ($result['success']) {
+                return view('booking.payment', [
+                    'booking' => $booking,
+                    'snap_token' => $result['snap_token'],
+                    'payment' => $result['payment'],
+                    'payment_type' => 'dp'
+                ]);
+                // $fonnteService = new FonnteService();
+                // $fonnteService->sendBookingNotification($booking);
+            } else {
+                return redirect()->route('dashboard')->with('error', 'Gagal membuat transaksi pembayaran DP: ' . ($result['message'] ?? 'Unknown error'));
+            }
+        } catch (\Exception $e) {
+            Log::error('DP Payment creation failed: ' . $e->getMessage(), [
+                'booking_id' => $booking->id,
+                'user_id' => Auth::id()
+            ]);
+            return redirect()->route('dashboard')->with('error', 'Terjadi kesalahan sistem. Silakan coba lagi.');
+        }
     }
 }
