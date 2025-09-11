@@ -14,6 +14,7 @@ class FieldResource extends Resource
 {
     protected static ?string $model = Field::class;
     protected static ?string $navigationIcon = 'tabler-soccer-field';
+    protected static ?string $navigationGroup = 'Field Management';
     protected static ?string $navigationLabel = 'Fields';
     protected static ?string $pluralLabel = 'Fields';
 

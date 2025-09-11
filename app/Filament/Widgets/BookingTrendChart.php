@@ -8,7 +8,8 @@ use Illuminate\Support\Facades\DB;
 
 class BookingTrendChart extends ChartWidget
 {
-    protected static ?string $heading = 'Tren Pemesanan per Bulan';
+    protected static ?string $heading = 'Monthly Ordering Trends';
+    protected int | string | array $columnSpan = 'full';
 
     protected function getData(): array
     {
@@ -26,7 +27,7 @@ class BookingTrendChart extends ChartWidget
             'labels' => array_keys($data),
             'datasets' => [
                 [
-                    'label' => 'Pemesanan',
+                    'label' => 'Booking',
                     'data' => array_values($data),
                     'backgroundColor' => '#3b82f6',
                     'borderColor' => '#2563eb',

@@ -18,6 +18,7 @@ class FieldScheduleResource extends Resource
     protected static ?string $model = FieldSchedule::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar';
+    protected static ?string $navigationGroup = 'Field Management';
 
     public static function form(Form $form): Form
     {

@@ -3,39 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\Booking;
-use App\Models\Payment;
 use App\Services\MidtransService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Services\FonnteService;
 
 class PaymentController extends Controller
 {
     public function callback(Request $request)
     {
+        // 1. Inisialisasi variabel di awal
+        $midtransService = new MidtransService();
+        $notification = $request->all();
+
         try {
-            // Log incoming callback untuk debugging
             Log::info('Midtrans Callback Received:', [
-                'all_data' => $request->all(),
+                'all_data' => $notification,
                 'headers' => $request->headers->all(),
                 'ip' => $request->ip(),
                 'user_agent' => $request->userAgent()
             ]);
 
-            $midtransService = new MidtransService();
-            $notification = $request->all();
-
-            // Skip signature validation untuk development/testing
+            // 2. Periksa tanda tangan (signature)
             if (app()->environment('local')) {
                 Log::info('Skipping signature validation in local environment');
             } else {
-                // Validasi signature dari Midtrans hanya di production
                 if (!$this->isValidSignature($notification)) {
                     Log::error('Invalid Midtrans signature', $notification);
                     return response('Invalid signature', 403);
                 }
             }
 
+            // 3. Tangani callback dengan MidtransService
             $result = $midtransService->handleCallback($notification);
 
             if ($result) {
@@ -48,7 +48,7 @@ class PaymentController extends Controller
         } catch (\Exception $e) {
             Log::error('Callback Error: ' . $e->getMessage(), [
                 'trace' => $e->getTraceAsString(),
-                'request_data' => $request->all()
+                'request_data' => $notification
             ]);
             return response('Error: ' . $e->getMessage(), 500);
         }
@@ -56,7 +56,11 @@ class PaymentController extends Controller
 
     private function isValidSignature($notification)
     {
-        // Implementasi validasi signature Midtrans
+        $order_id = $notification['order_id'] ?? '';
+        $status_code = $notification['status_code'] ?? '';
+        $gross_amount = $notification['gross_amount'] ?? '';
+        $server_key = config('midtrans.server_key');
+        
         $order_id = $notification['order_id'] ?? '';
         $status_code = $notification['status_code'] ?? '';
         $gross_amount = $notification['gross_amount'] ?? '';
@@ -70,65 +74,61 @@ class PaymentController extends Controller
 
     public function success(Request $request)
     {
-        $order_id = $request->get('order_id');
-        $booking = null;
-
-        if ($order_id) {
-            // Extract booking ID from order_id format
-            $parts = explode('-', $order_id);
-            if (count($parts) >= 2) {
-                $booking_id = $parts[1];
-                $booking = Booking::find($booking_id);
-            }
-        }
-
-        if ($booking) {
-            // Panggil WA Service
-            $fonnte = new \App\Services\FonnteService();
-            $fonnte->sendBookingNotification($booking);
-        }
+        $booking = $this->getBookingFromOrderId($request->get('order_id'));
 
         return view('payment.success', compact('booking'));
     }
 
     public function pending(Request $request)
     {
-        $order_id = $request->get('order_id');
-        $booking = null;
-
-        if ($order_id) {
-            $parts = explode('-', $order_id);
-            if (count($parts) >= 2) {
-                $booking_id = $parts[1];
-                $booking = Booking::find($booking_id);
-            }
-        }
-
+        $booking = $this->getBookingFromOrderId($request->get('order_id'));
         return view('payment.pending', compact('booking'));
     }
 
     public function error(Request $request)
     {
-        $order_id = $request->get('order_id');
-        $booking = null;
+        $booking = $this->getBookingFromOrderId($request->get('order_id'));
+        return view('payment.error', compact('booking'));
+    }
 
-        if ($order_id) {
-            $parts = explode('-', $order_id);
-            if (count($parts) >= 2) {
-                $booking_id = $parts[1];
-                $booking = Booking::find($booking_id);
-            }
+    private function getBookingFromOrderId($order_id)
+    {
+        if (!$order_id) {
+            return null;
         }
 
-        return view('payment.error', compact('booking'));
+        $parts = explode('-', $order_id);
+        if (count($parts) >= 2) {
+            $booking_id = $parts[1];
+            return Booking::find($booking_id);
+        }
+
+        return null;
     }
 
     public function payRemaining(Booking $booking)
     {
-        // Validasi user dan status booking
-        if ($booking->user_id !== Auth::id()) {
-            abort(403, 'Unauthorized');
+        // Debug log untuk memastikan siapa usernya
+        // Log::info('PayRemaining called', [
+        //     'booking_id' => $booking->id,
+        //     'booking_user_id' => $booking->user_id,
+        //     'auth_id' => Auth::id(),
+        //     'auth_user' => Auth::user()
+        // ]);
+        // dd([
+        //     'auth_id' => Auth::id(),
+        //     'auth_user' => Auth::user(),
+        //     'booking_user_id' => $booking->user_id,
+        // ]);
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Silakan login untuk melanjutkan pembayaran.');
         }
+
+        if ((int) $booking->user_id !== (int) Auth::id()) {
+            abort(403, 'Unauthorized - booking bukan milik Anda');
+        }
+
 
         if ($booking->status !== 'dp_paid') {
             return back()->with('error', 'Status booking tidak valid untuk pembayaran sisa.');
@@ -155,7 +155,6 @@ class PaymentController extends Controller
             }
         }
 
-        // For cash payment, just show a message
         return back()->with('info', 'Untuk pembayaran cash, silakan hubungi admin untuk konfirmasi.');
     }
 }

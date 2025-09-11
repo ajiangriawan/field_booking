@@ -9,7 +9,7 @@ use Filament\Widgets\TableWidget;
 
 class LatestBookingsTable extends TableWidget
 {
-    protected static ?string $heading = 'Pemesanan Terbaru';
+    protected static ?string $heading = 'Latest Orders';
 
     protected int | string | array $columnSpan = 'full';
 
