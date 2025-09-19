@@ -155,7 +155,7 @@
     <div id="notification-container" class="fixed top-16 sm:top-20 right-2 sm:right-4 z-40 space-y-2 w-11/12 sm:w-80 md:w-96"></div>
 
     <!-- Main Content -->
-    <main class="relative z-10 flex items-center justify-center min-h-[calc(100vh-120px)] py-6 sm:py-8 px-4 sm:px-6">
+    <main class="relative z-10 flex flex-col items-center justify-center min-h-[calc(100vh-120px)] py-6 sm:py-8 px-4 sm:px-6">
         <!-- Session Messages -->
         @if (session('success') || session('error') || session('info') || session('warning'))
         <div class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 sm:pt-6">

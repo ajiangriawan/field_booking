@@ -35,6 +35,27 @@ class EditBooking extends EditRecord
             \Log::info('Updating pivot data for booking ID: ' . $this->record->id, $this->scheduleIds);
             $this->record->fieldSchedules()->sync($this->scheduleIds); // Gunakan sync untuk efisiensi
         }
+
+        $booking = $this->record;
+
+        // Update amounts & payment method
+        $booking->payments()->where('payment_type', 'dp')->update([
+            'amount' => $booking->dp_amount,
+            'payment_method' => $booking->payment_method,
+        ]);
+
+        $booking->payments()->where('payment_type', 'remaining')->update([
+            'amount' => $booking->remaining_amount,
+            'payment_method' => $booking->payment_method,
+        ]);
+
+        // 🔹 Jika booking sudah lunas
+        if ($booking->status === 'fully_paid') {
+            $booking->payments()->update([
+                'status' => 'paid',
+                'paid_at' => now(),
+            ]);
+        }
     }
 
     protected $scheduleIds = [];

@@ -59,10 +59,13 @@
 
         /* Sport-themed animations */
         @keyframes pulse-sport {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: scale(1);
                 box-shadow: 0 0 0 0 rgba(138, 166, 36, 0.7);
             }
+
             50% {
                 transform: scale(1.02);
                 box-shadow: 0 0 0 10px rgba(138, 166, 36, 0);
@@ -70,9 +73,12 @@
         }
 
         @keyframes glow-sport {
-            0%, 100% {
+
+            0%,
+            100% {
                 box-shadow: 0 0 20px rgba(138, 166, 36, 0.5);
             }
+
             50% {
                 box-shadow: 0 0 40px rgba(138, 166, 36, 0.8);
             }
@@ -83,6 +89,7 @@
                 transform: translateY(30px);
                 opacity: 0;
             }
+
             100% {
                 transform: translateY(0);
                 opacity: 1;
@@ -90,9 +97,12 @@
         }
 
         @keyframes float {
-            0%, 100% {
+
+            0%,
+            100% {
                 transform: translateY(0px);
             }
+
             50% {
                 transform: translateY(-20px);
             }
@@ -102,6 +112,7 @@
             0% {
                 background-position: -200% 0;
             }
+
             100% {
                 background-position: 200% 0;
             }
@@ -194,16 +205,45 @@
         }
 
         /* Utility classes */
-        .text-sport-primary { color: var(--sport-primary); }
-        .text-sport-secondary { color: var(--sport-secondary); }
-        .text-sport-accent { color: var(--sport-accent); }
-        .text-sport-text { color: var(--sport-text); }
-        .text-sport-text-muted { color: var(--sport-text-muted); }
-        .bg-sport-primary { background-color: var(--sport-primary); }
-        .bg-sport-secondary { background-color: var(--sport-secondary); }
-        .bg-sport-accent { background-color: var(--sport-accent); }
-        .bg-sport-dark { background-color: var(--sport-dark); }
-        .bg-sport-gray { background-color: var(--sport-gray); }
+        .text-sport-primary {
+            color: var(--sport-primary);
+        }
+
+        .text-sport-secondary {
+            color: var(--sport-secondary);
+        }
+
+        .text-sport-accent {
+            color: var(--sport-accent);
+        }
+
+        .text-sport-text {
+            color: var(--sport-text);
+        }
+
+        .text-sport-text-muted {
+            color: var(--sport-text-muted);
+        }
+
+        .bg-sport-primary {
+            background-color: var(--sport-primary);
+        }
+
+        .bg-sport-secondary {
+            background-color: var(--sport-secondary);
+        }
+
+        .bg-sport-accent {
+            background-color: var(--sport-accent);
+        }
+
+        .bg-sport-dark {
+            background-color: var(--sport-dark);
+        }
+
+        .bg-sport-gray {
+            background-color: var(--sport-gray);
+        }
 
         /* Custom scrollbar */
         ::-webkit-scrollbar {
@@ -237,7 +277,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: 
+            background:
                 radial-gradient(circle at 20% 30%, rgba(138, 166, 36, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 80% 70%, rgba(34, 197, 94, 0.1) 0%, transparent 50%),
                 radial-gradient(circle at 50% 50%, rgba(138, 166, 36, 0.05) 0%, transparent 70%);
@@ -360,10 +400,12 @@
                             <span>Mulai Pesan Sekarang</span>
                             <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
                         </a>
-                        <button class="btn-outline text-lg px-8 py-4 rounded-2xl group flex items-center justify-center">
-                            <i class="fas fa-play-circle mr-2"></i>
-                            <span>Lihat Demo</span>
-                        </button>
+                        <a href="https://youtu.be/iMVwAYdpA8s?si=zQrmVtuZiHlhhTUT" target="_blank" rel="noopener noreferrer">
+                            <button class="btn-outline text-lg px-8 py-4 rounded-2xl group flex items-center justify-center">
+                                <i class="fas fa-play-circle mr-2"></i>
+                                <span>Lihat Demo</span>
+                            </button>
+                        </a>
                     </div>
 
                     <!-- Trust Indicators -->
@@ -806,14 +848,14 @@
                             <i class="fas fa-envelope text-sport-primary mt-1"></i>
                             <div>
                                 <p class="text-sport-text-muted">Email</p>
-                                <a href="mailto:asitcom.business@gmail.com" class="text-sport-text hover:text-sport-primary transition-colors">hello@asitcomsport.com</a>
+                                <a href="mailto:asitcom.business@gmail.com" class="text-sport-text hover:text-sport-primary transition-colors">asitcom.business@gmail.com</a>
                             </div>
                         </div>
                         <div class="flex items-start space-x-3">
                             <i class="fas fa-phone text-sport-accent mt-1"></i>
                             <div>
                                 <p class="text-sport-text-muted">Telepon</p>
-                                <a href="tel:+687813233775" class="text-sport-text hover:text-sport-accent transition-colors">+62 21 1234 5678</a>
+                                <a href="https://wa.me/087813233775" class="text-sport-text hover:text-sport-accent transition-colors">+62 78 1323 3775</a>
                             </div>
                         </div>
                         <div class="flex items-start space-x-3">
@@ -1010,6 +1052,7 @@
 
         // Performance optimization
         let ticking = false;
+
         function updateElements() {
             // Update scroll-based animations here
             ticking = false;

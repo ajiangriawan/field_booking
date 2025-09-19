@@ -19,7 +19,7 @@ class StatsOverview extends BaseWidget
             Stat::make('Pending Payments', Payment::where('status', 'pending')->count())
                 ->description('Unfinished payments')
                 ->color('warning'),
-            Stat::make('Total Revenue', 'Rp ' . number_format(Payment::where('status', 'paid')->sum('amount'), 2, ',', '.'))
+            Stat::make('Total Revenue', 'Rp ' . number_format(Payment::where('status', 'paid')->sum('amount'), 0, ',', '.'))
                 ->description('Income from paid in full')
                 ->color('success'),
             Stat::make('Active Users', User::where('role', 'customer')->count())

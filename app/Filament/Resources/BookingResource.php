@@ -109,11 +109,14 @@ class BookingResource extends Resource
                     ->helperText('Pilih satu atau lebih jadwal yang masih tersedia pada tanggal tersebut.'),
 
                 Forms\Components\TextInput::make('total_price')
+                    ->label('Total Price')
                     ->numeric()
                     ->prefix('Rp')
                     ->disabled()
                     ->dehydrated()
-                    ->formatStateUsing(fn($state) => number_format($state, 0, ',', '.'))
+                    ->formatStateUsing(fn($state) => $state !== null
+                        ? number_format($state, 0, ',', '.')
+                        : null)
                     ->helperText('Total harga dihitung otomatis berdasarkan schedule yang dipilih.'),
 
                 Forms\Components\TextInput::make('dp_amount')
@@ -122,7 +125,9 @@ class BookingResource extends Resource
                     ->prefix('Rp')
                     ->disabled()
                     ->dehydrated()
-                    ->formatStateUsing(fn($state) => number_format($state, 0, ',', '.'))
+                    ->formatStateUsing(fn($state) => $state !== null
+                        ? number_format($state, 0, ',', '.')
+                        : null)
                     ->helperText('Uang muka 20% dari total harga.'),
 
                 Forms\Components\TextInput::make('remaining_amount')
@@ -131,8 +136,19 @@ class BookingResource extends Resource
                     ->prefix('Rp')
                     ->disabled()
                     ->dehydrated()
-                    ->formatStateUsing(fn($state) => number_format($state, 0, ',', '.'))
+                    ->formatStateUsing(fn($state) => $state !== null
+                        ? number_format($state, 0, ',', '.')
+                        : null)
                     ->helperText('Sisa pembayaran yang harus dibayar.'),
+
+
+                Forms\Components\Select::make('payment_method')
+                    ->label('Payment Method')
+                    ->options([
+                        'cash' => 'Cash',
+                        'transfer' => 'Transfer',
+                    ])
+                    ->required(),
 
                 Forms\Components\Select::make('status')
                     ->options([
@@ -143,6 +159,7 @@ class BookingResource extends Resource
                     ])
                     ->default('pending')
                     ->required(),
+
             ]);
     }
 
@@ -157,6 +174,13 @@ class BookingResource extends Resource
                     ->label('User')
                     ->sortable()
                     ->searchable(),
+
+                Tables\Columns\TextColumn::make('payment_method')
+                    ->label('Payment Method')
+                    ->formatStateUsing(fn($state) => ucfirst($state))
+                    ->sortable()
+                    ->searchable(),
+
 
                 Tables\Columns\TextColumn::make('field.name')
                     ->label('Field')
@@ -254,7 +278,7 @@ class BookingResource extends Resource
                     ->preload(),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                // Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
             ])
@@ -269,6 +293,7 @@ class BookingResource extends Resource
             'index' => Pages\ListBookings::route('/'),
             'create' => Pages\CreateBooking::route('/create'),
             'edit' => Pages\EditBooking::route('/{record}/edit'),
+            'view' => Pages\ViewBooking::route('/{record}'),
         ];
     }
 }

@@ -3,15 +3,12 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\UserResource\Pages;
-use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\User;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UserResource extends Resource
 {
@@ -36,19 +33,23 @@ class UserResource extends Resource
                     ->required()
                     ->unique(ignoreRecord: true),
 
+                Forms\Components\TextInput::make('phone')
+                    ->tel()
+                    ->maxLength(20),
+
                 Forms\Components\TextInput::make('password')
                     ->password()
-                    ->dehydrateStateUsing(fn ($state) => filled($state) ? bcrypt($state) : null)
-                    ->required(fn (string $context): bool => $context === 'create')
-                    ->dehydrated(fn ($state) => filled($state))
+                    ->dehydrateStateUsing(fn($state) => filled($state) ? bcrypt($state) : null)
+                    ->required(fn(string $context): bool => $context === 'create')
+                    ->dehydrated(fn($state) => filled($state))
                     ->maxLength(255),
 
                 Forms\Components\Select::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'user' => 'User',
+                        'customer' => 'Customer',
                     ])
-                    ->default('user')
+                    ->default('customer')
                     ->required(),
             ]);
     }
@@ -57,14 +58,25 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('id')->sortable(),
-                Tables\Columns\TextColumn::make('name')->searchable(),
-                Tables\Columns\TextColumn::make('email')->searchable(),
+                Tables\Columns\TextColumn::make('id')
+                    ->sortable(),
+
+                Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('email')
+                    ->searchable(),
+
+                Tables\Columns\TextColumn::make('phone')
+                    ->label('Phone')
+                    ->placeholder('-'),
+
                 Tables\Columns\BadgeColumn::make('role')
                     ->colors([
                         'success' => 'admin',
-                        'secondary' => 'user',
+                        'secondary' => 'customer',
                     ]),
+
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime('d M Y H:i')
                     ->sortable(),
@@ -73,7 +85,7 @@ class UserResource extends Resource
                 Tables\Filters\SelectFilter::make('role')
                     ->options([
                         'admin' => 'Admin',
-                        'user' => 'User',
+                        'customer' => 'Customer',
                     ]),
             ])
             ->actions([

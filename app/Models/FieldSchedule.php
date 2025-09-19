@@ -33,8 +33,12 @@ class FieldSchedule extends Model
 
     public function isBooked($date)
     {
-        return $this->bookings()->where('booking_date', $date)->exists();
+        return $this->bookings()
+            ->where('booking_date', $date)
+            ->where('status', '!=', 'fully_paid') // exclude fully_paid
+            ->exists();
     }
+
 
     public function bookings(): BelongsToMany
     {

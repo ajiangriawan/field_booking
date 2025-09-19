@@ -25,7 +25,7 @@ class LatestBookingsTable extends TableWidget
                 Tables\Columns\TextColumn::make('status')
                     ->label('Status')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'pending' => 'warning',
                         'dp_paid' => 'info',
                         'fully_paid' => 'success',
@@ -33,7 +33,8 @@ class LatestBookingsTable extends TableWidget
                     }),
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
+                Tables\Actions\ViewAction::make()
+                    ->url(fn($record) => route('filament.admin.resources.bookings.view', $record))
             ]);
     }
 }

@@ -135,75 +135,75 @@
             </div>
 
             <!-- Quick Actions -->
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 animate-fade-in-up" style="animation-delay: 0.4s;">
+            <!--<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8 animate-fade-in-up" style="animation-delay: 0.4s;">-->
                 <!-- Recent Activity -->
-                <div class="lg:col-span-2 glass-morphism border border-sport-primary/20 rounded-2xl overflow-hidden">
-                    <div class="p-6 border-b border-sport-primary/10">
-                        <div class="flex items-center justify-between">
-                            <h3 class="text-xl font-semibold text-sport-text flex items-center">
-                                <i class="fas fa-clock text-sport-primary mr-3"></i>
-                                Recent Activity
-                            </h3>
-                            <div class="w-2 h-2 bg-sport-accent rounded-full animate-pulse"></div>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        @if($bookings->take(3)->count() > 0)
-                        <div class="space-y-4">
-                            @foreach($bookings->take(3) as $booking)
-                            <div class="flex items-center space-x-4 p-4 bg-sport-gray/30 rounded-xl hover:bg-sport-primary/5 transition-colors duration-300">
-                                <div class="w-10 h-10 bg-gradient-to-br from-sport-primary to-sport-accent rounded-lg flex items-center justify-center flex-shrink-0">
-                                    <i class="fas fa-dumbbell text-white text-sm"></i>
-                                </div>
-                                <div class="flex-1 min-w-0">
-                                    <p class="text-sport-text font-medium truncate">{{ $booking->field->name }}</p>
-                                    <p class="text-sport-text-muted text-sm">{{ $booking->booking_date->format('M j, Y') }}</p>
-                                </div>
-                                <div class="text-right flex-shrink-0">
-                                    <p class="text-sport-primary font-semibold">{{ $booking->booking_code }}</p>
-                                    <p class="text-sport-text-muted text-xs">{{ ucfirst($booking->status) }}</p>
-                                </div>
-                            </div>
-                            @endforeach
-                        </div>
-                        @else
-                        <div class="text-center py-8">
-                            <i class="fas fa-calendar-times text-4xl text-sport-text-muted mb-4"></i>
-                            <p class="text-sport-text-muted">No recent activity</p>
-                        </div>
-                        @endif
-                    </div>
-                </div>
+            <!--    <div class="lg:col-span-2 glass-morphism border border-sport-primary/20 rounded-2xl overflow-hidden">-->
+            <!--        <div class="p-6 border-b border-sport-primary/10">-->
+            <!--            <div class="flex items-center justify-between">-->
+            <!--                <h3 class="text-xl font-semibold text-sport-text flex items-center">-->
+            <!--                    <i class="fas fa-clock text-sport-primary mr-3"></i>-->
+            <!--                    Recent Activity-->
+            <!--                </h3>-->
+            <!--                <div class="w-2 h-2 bg-sport-accent rounded-full animate-pulse"></div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--        <div class="p-6">-->
+            <!--            @if($bookings->take(3)->count() > 0)-->
+            <!--            <div class="space-y-4">-->
+            <!--                @foreach($bookings->take(3) as $booking)-->
+            <!--                <div class="flex items-center space-x-4 p-4 bg-sport-gray/30 rounded-xl hover:bg-sport-primary/5 transition-colors duration-300">-->
+            <!--                    <div class="w-10 h-10 bg-gradient-to-br from-sport-primary to-sport-accent rounded-lg flex items-center justify-center flex-shrink-0">-->
+            <!--                        <i class="fas fa-dumbbell text-white text-sm"></i>-->
+            <!--                    </div>-->
+            <!--                    <div class="flex-1 min-w-0">-->
+            <!--                        <p class="text-sport-text font-medium truncate">{{ $booking->field->name }}</p>-->
+            <!--                        <p class="text-sport-text-muted text-sm">{{ $booking->booking_date->format('M j, Y') }}</p>-->
+            <!--                    </div>-->
+            <!--                    <div class="text-right flex-shrink-0">-->
+            <!--                        <p class="text-sport-primary font-semibold">{{ $booking->booking_code }}</p>-->
+            <!--                        <p class="text-sport-text-muted text-xs">{{ ucfirst($booking->status) }}</p>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--                @endforeach-->
+            <!--            </div>-->
+            <!--            @else-->
+            <!--            <div class="text-center py-8">-->
+            <!--                <i class="fas fa-calendar-times text-4xl text-sport-text-muted mb-4"></i>-->
+            <!--                <p class="text-sport-text-muted">No recent activity</p>-->
+            <!--            </div>-->
+            <!--            @endif-->
+            <!--        </div>-->
+            <!--    </div>-->
 
                 <!-- Quick Stats -->
-                <div class="glass-morphism border border-sport-primary/20 rounded-2xl overflow-hidden">
-                    <div class="p-6 border-b border-sport-primary/10">
-                        <h3 class="text-xl font-semibold text-sport-text flex items-center">
-                            <i class="fas fa-chart-pie text-sport-accent mr-3"></i>
-                            Quick Stats
-                        </h3>
-                    </div>
-                    <div class="p-6 space-y-6">
-                        <div class="text-center">
-                            <div class="w-20 h-20 bg-gradient-to-br from-sport-primary to-sport-accent rounded-full flex items-center justify-center mx-auto mb-3">
-                                <span class="text-white text-2xl font-bold">{{ $bookings->where('status', 'fully_paid')->count() }}</span>
-                            </div>
-                            <p class="text-sport-text font-medium">Completed Sessions</p>
-                            <p class="text-sport-text-muted text-sm">This month</p>
-                        </div>
+            <!--    <div class="glass-morphism border border-sport-primary/20 rounded-2xl overflow-hidden">-->
+            <!--        <div class="p-6 border-b border-sport-primary/10">-->
+            <!--            <h3 class="text-xl font-semibold text-sport-text flex items-center">-->
+            <!--                <i class="fas fa-chart-pie text-sport-accent mr-3"></i>-->
+            <!--                Quick Stats-->
+            <!--            </h3>-->
+            <!--        </div>-->
+            <!--        <div class="p-6 space-y-6">-->
+            <!--            <div class="text-center">-->
+            <!--                <div class="w-20 h-20 bg-gradient-to-br from-sport-primary to-sport-accent rounded-full flex items-center justify-center mx-auto mb-3">-->
+            <!--                    <span class="text-white text-2xl font-bold">{{ $bookings->where('status', 'fully_paid')->count() }}</span>-->
+            <!--                </div>-->
+            <!--                <p class="text-sport-text font-medium">Completed Sessions</p>-->
+            <!--                <p class="text-sport-text-muted text-sm">This month</p>-->
+            <!--            </div>-->
 
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center">
-                                <span class="text-sport-text-muted text-sm">Success Rate</span>
-                                <span class="text-sport-accent font-semibold">98%</span>
-                            </div>
-                            <div class="w-full bg-sport-gray rounded-full h-2">
-                                <div class="bg-gradient-to-r from-sport-primary to-sport-accent h-2 rounded-full" style="width: 98%"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <!--            <div class="space-y-3">-->
+            <!--                <div class="flex justify-between items-center">-->
+            <!--                    <span class="text-sport-text-muted text-sm">Success Rate</span>-->
+            <!--                    <span class="text-sport-accent font-semibold">98%</span>-->
+            <!--                </div>-->
+            <!--                <div class="w-full bg-sport-gray rounded-full h-2">-->
+            <!--                    <div class="bg-gradient-to-r from-sport-primary to-sport-accent h-2 rounded-full" style="width: 98%"></div>-->
+            <!--                </div>-->
+            <!--            </div>-->
+            <!--        </div>-->
+            <!--    </div>-->
+            <!--</div>-->
 
             <!-- Booking History Table -->
             <div class="glass-morphism border border-sport-primary/20 rounded-2xl overflow-hidden animate-fade-in-up" style="animation-delay: 0.6s;">
@@ -327,7 +327,7 @@
                                                 Bayar Pelunasan
                                             </button>
                                         </form>
-                                        @elseif($booking->status === 'pending')
+                                        @elseif($booking->status === 'pending' && $booking->payment_method == 'transfer')
                                         <form action="{{ route('booking.payDp', $booking) }}" method="POST" class="inline">
                                             @csrf
                                             <button type="submit" class="btn-sport text-sm px-4 py-2 rounded-2xl bg-gradient-to-r from-sport-primary to-sport-accent hover:from-sport-primary hover:to-sport-primary-dark group">
